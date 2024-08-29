@@ -3,6 +3,7 @@ import './App.css';
 
 const App = () => {
     const [experimentType, setExperimentType] = useState('');
+    const [weight, setWeight] = useState('');
     const [exposureDays, setExposureDays] = useState('');
 
     const handleSubmit = () => {
@@ -31,13 +32,14 @@ const App = () => {
         if (url) {
             window.location.href = url;
         } else {
-            alert('Please select a valid experiment type and exposure days.');
+            alert('Please select a valid experiment type, weight, and exposure days.');
         }
     };
 
     return (
         <div className="container">
             <h1>Custom Calculator</h1>
+
             <div className="form-group">
                 <label htmlFor="experimentType" className="label">What type of experiment are you conducting?</label>
                 <select
@@ -52,20 +54,53 @@ const App = () => {
                     <option value="Hair">Hair</option>
                 </select>
             </div>
-            {(experimentType === 'Blood' || experimentType === 'Urine') && (
+
+            {experimentType === 'Blood' || experimentType === 'Urine' ? (
+                <>
+                    <div className="form-group">
+                        <label htmlFor="weight" className="label">Weight (kg):</label>
+                        <input
+                            type="number"
+                            id="weight"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)}
+                            className="input"
+                            min="1"
+                        />
+                    </div>
+                    {weight && (
+                        <div className="form-group">
+                            <label htmlFor="exposureDays" className="label">Exposure Days (EXPOSURE LEVEL):</label>
+                            <input
+                                type="number"
+                                id="exposureDays"
+                                value={exposureDays}
+                                onChange={(e) => setExposureDays(e.target.value)}
+                                className="input"
+                                min="1"
+                            />
+                        </div>
+                    )}
+                </>
+            ) : null}
+
+            {experimentType === 'Hair' && (
                 <div className="form-group">
-                    <label htmlFor="exposureDays" className="label">Exposure Days:</label>
+                    <label htmlFor="weight" className="label">Weight (kg):</label>
                     <input
                         type="number"
-                        id="exposureDays"
-                        value={exposureDays}
-                        onChange={(e) => setExposureDays(e.target.value)}
+                        id="weight"
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
                         className="input"
                         min="1"
                     />
                 </div>
             )}
-            <button onClick={handleSubmit} className="button">Submit</button>
+
+            {(experimentType === 'Blood' || experimentType === 'Urine' || experimentType === 'Hair') && (
+                <button onClick={handleSubmit} className="button">Submit</button>
+            )}
         </div>
     );
 };
