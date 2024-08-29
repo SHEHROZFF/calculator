@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import './App.css';
+import Notification from './Notification'; // Import the Notification component
 
 const App = () => {
     const [experimentType, setExperimentType] = useState('');
-    const [weight, setWeight] = useState('');
     const [exposureDays, setExposureDays] = useState('');
+    const [weight, setWeight] = useState('');
+    const [toxicity, setToxicity] = useState('');
+    const [notification, setNotification] = useState({ message: '', type: '' });
 
     const handleSubmit = () => {
+        if (!experimentType || !exposureDays || !weight || !toxicity) {
+            setNotification({
+                message: 'Please fill in all fields before proceeding.',
+                type: 'error'
+            });
+            return;
+        }
+
         let url = '';
 
         if (experimentType === 'Blood' || experimentType === 'Urine') {
@@ -31,76 +42,82 @@ const App = () => {
 
         if (url) {
             window.location.href = url;
-        } else {
-            alert('Please select a valid experiment type, weight, and exposure days.');
         }
     };
 
     return (
         <div className="container">
-            <h1>Custom Calculator</h1>
-
-            <div className="form-group">
-                <label htmlFor="experimentType" className="label">What type of experiment are you conducting?</label>
-                <select
-                    id="experimentType"
-                    value={experimentType}
-                    onChange={(e) => setExperimentType(e.target.value)}
-                    className="select"
-                >
-                    <option value="">Select Type</option>
-                    <option value="Blood">Blood</option>
-                    <option value="Urine">Urine</option>
-                    <option value="Hair">Hair</option>
-                </select>
+            <h1>DETOXIFICATION CALCULATOR</h1>
+            {notification.message && <Notification message={notification.message} type={notification.type} />}
+            <div className="form-row">
+                <div className="form-group">
+                    <label htmlFor="toxicity" className="label">What is your toxicity level?</label>
+                    <label htmlFor="toxicity" className="label">(Based on 30 Days window)</label>
+                    <select
+                        id="toxicity"
+                        value={toxicity}
+                        onChange={(e) => setToxicity(e.target.value)}
+                        className="select"
+                    >
+                        <option value="">Select Toxicity Level</option>
+                        <option value="Low">Low (Minimal use)</option>
+                        <option value="Moderate">Moderate (Occasional use)</option>
+                        <option value="High">High (Regular use)</option>
+                        <option value="Very High">Very High (Heavy use)</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="experimentType" className="label">What type of experiment are you conducting?</label>
+                    <select
+                        id="experimentType"
+                        value={experimentType}
+                        onChange={(e) => setExperimentType(e.target.value)}
+                        className="select margin"
+                    >
+                        <option value="">Select Type</option>
+                        <option value="Blood">Blood</option>
+                        <option value="Urine">Urine</option>
+                        <option value="Hair">Hair</option>
+                    </select>
+                </div>
             </div>
-
-            {experimentType === 'Blood' || experimentType === 'Urine' ? (
-                <>
-                    <div className="form-group">
-                        <label htmlFor="weight" className="label">Weight (kg):</label>
-                        <input
-                            type="number"
-                            id="weight"
-                            value={weight}
-                            onChange={(e) => setWeight(e.target.value)}
-                            className="input"
-                            min="1"
-                        />
-                    </div>
-                    {weight && (
-                        <div className="form-group">
-                            <label htmlFor="exposureDays" className="label">Exposure Days (EXPOSURE LEVEL):</label>
-                            <input
-                                type="number"
-                                id="exposureDays"
-                                value={exposureDays}
-                                onChange={(e) => setExposureDays(e.target.value)}
-                                className="input"
-                                min="1"
-                            />
-                        </div>
-                    )}
-                </>
-            ) : null}
-
-            {experimentType === 'Hair' && (
+            <div className="form-row">
                 <div className="form-group">
                     <label htmlFor="weight" className="label">Weight (kg):</label>
-                    <input
-                        type="number"
+                    <select
                         id="weight"
                         value={weight}
                         onChange={(e) => setWeight(e.target.value)}
-                        className="input"
-                        min="1"
-                    />
+                        className="select"
+                    >
+                        <option value="">Select Weight</option>
+                        <option value="30KG to 60Kg">30KG to 60Kg</option>
+                        <option value="61KG to 80Kg">61KG to 80Kg</option>
+                        <option value="81KG to 100Kg">81KG to 100Kg</option>
+                        <option value="101KG to 120Kg">101KG to 120Kg</option>
+                        <option value="Over 120KG">Over 120KG</option>
+                    </select>
                 </div>
-            )}
-
-            {(experimentType === 'Blood' || experimentType === 'Urine' || experimentType === 'Hair') && (
-                <button onClick={handleSubmit} className="button">Submit</button>
-            )}
+                <div className="form-group">
+                    <label htmlFor="exposureDays" className="label">Exposure Level (in Days)</label>
+                    <select
+                        id="exposureDays"
+                        value={exposureDays}
+                        onChange={(e) => setExposureDays(e.target.value)}
+                        className="select"
+                    >
+                        <option value="">Select Exposure Days</option>
+                        <option value="2">BETWEEN 1 to 3 DAYS</option>
+                        <option value="5">BETWEEN 4 to 6 DAYS</option>
+                        <option value="8">BETWEEN 7 to 9 DAYS</option>
+                        <option value="12">BETWEEN 10 to 14 DAYS</option>
+                        <option value="17">BETWEEN 15 to 19 DAYS</option>
+                        <option value="22">BETWEEN 20 to 24 DAYS</option>
+                        <option value="26">MORE THAN 25 DAYS</option>
+                    </select>
+                </div>
+            </div>
+            <button onClick={handleSubmit} className="button">CALCULATE MY RECOMMENDED PRODUCT</button>
         </div>
     );
 };
