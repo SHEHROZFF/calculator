@@ -83,7 +83,7 @@ const App = () => {
             </div>
             <div className="form-row">
                 <div className="form-group">
-                    <label htmlFor="weight" className="label">Weight (kg):</label>
+                    <label htmlFor="weight" className="label">Weight (lbs):</label>
                     <select
                         id="weight"
                         value={weight}
@@ -91,11 +91,11 @@ const App = () => {
                         className="select"
                     >
                         <option value="">Select Weight</option>
-                        <option value="30KG to 60Kg">30KG to 60Kg</option>
-                        <option value="61KG to 80Kg">61KG to 80Kg</option>
-                        <option value="81KG to 100Kg">81KG to 100Kg</option>
-                        <option value="101KG to 120Kg">101KG to 120Kg</option>
-                        <option value="Over 120KG">Over 120KG</option>
+                        <option value="66 to 132">66 to 132 lbs</option>
+                        <option value="134 to 176">134 to 176 lbs</option>
+                        <option value="178 to 220">178 to 220 lbs</option>
+                        <option value="222 to 264">222 to 264 lbs</option>
+                        <option value="Over 264">Over 264 lbs</option>
                     </select>
                 </div>
                 <div className="form-group">
