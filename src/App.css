@@ -60,14 +60,14 @@ h1 {
 /* Form Element Styles */
 .select, .input, .button {
   width: 100%;
-  max-width: 100%;
   padding: 12px;
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 16px;
   margin-bottom: 10px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  
+  
 }
 
 .select:focus, .input:focus {
@@ -93,7 +93,6 @@ h1 {
   background-color: #003f7f;
   transform: translateY(1px);
 }
-
 .margin {
   margin-top: 8px;
 }
@@ -147,5 +146,7 @@ h1 {
 }
 
 .notification.error {
-  background-color: #f44336; /* Red */
+  background-color: #80251f; /* Red */
 }
+
+
